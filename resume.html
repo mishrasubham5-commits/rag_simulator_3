@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shubham Mishra | AI & Product Program Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #07111f;
+      --card: rgba(15, 23, 42, 0.75);
+      --border: rgba(255,255,255,0.08);
+      --primary: #00f0ff;
+      --secondary: #7c3aed;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --success: #00ff95;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, #132238 0%, #07111f 45%, #020617 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding: 40px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: rgba(0, 240, 255, 0.08);
+      border-radius: 50%;
+      filter: blur(120px);
+      top: -150px;
+      right: -100px;
+      z-index: -1;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      background: rgba(124, 58, 237, 0.08);
+      border-radius: 50%;
+      filter: blur(120px);
+      bottom: -180px;
+      left: -100px;
+      z-index: -1;
+    }
+
+    .resume-container {
+      max-width: 1400px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 28px;
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      border-radius: 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+    }
+
+    .sidebar {
+      padding: 32px;
+      position: sticky;
+      top: 20px;
+      height: fit-content;
+    }
+
+    .profile {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 30px;
+      margin: auto;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      box-shadow: 0 0 30px rgba(0,240,255,0.35);
+    }
+
+    .name {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .role {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .contact {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-item {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: var(--primary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill {
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(0,240,255,0.08);
+      border: 1px solid rgba(0,240,255,0.2);
+      font-size: 13px;
+      color: var(--text);
+      transition: 0.3s ease;
+    }
+
+    .skill:hover {
+      transform: translateY(-3px);
+      background: rgba(0,240,255,0.16);
+    }
+
+    .sidebar-section {
+      margin-bottom: 34px;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .hero {
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      background: rgba(0,240,255,0.08);
+      border-radius: 50%;
+      right: -80px;
+      top: -80px;
+    }
+
+    .headline {
+      font-size: 54px;
+      line-height: 1.1;
+      font-weight: 800;
+      max-width: 800px;
+      margin-bottom: 20px;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, var(--primary), #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .summary {
+      max-width: 900px;
+      line-height: 1.8;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .metrics {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .metric-card {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .metric-value {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--success);
+      margin-bottom: 6px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .content-card {
+      padding: 34px;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(var(--primary), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 36px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 12px var(--primary);
+    }
+
+    .job-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .company {
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .job-description {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-top: 12px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .tagline {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 50px;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.3);
+      font-size: 14px;
+      color: #d8b4fe;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .download-btn {
+      margin-top: 24px;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0,240,255,0.25);
+    }
+
+    @media(max-width: 1100px) {
+      .resume-container {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+      }
+
+      .metrics,
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+
+      .headline {
+        font-size: 40px;
+      }
+    }
+
+    @media(max-width: 768px) {
+      body {
+        padding: 18px;
+      }
+
+      .hero,
+      .content-card,
+      .sidebar {
+        padding: 24px;
+      }
+
+      .headline {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="resume-container">
+
+    <aside class="sidebar glass">
+      <div class="profile">
+        <div class="avatar">SM</div>
+        <div class="name">Shubham Mishra</div>
+        <div class="role">AI + Product Program Manager</div>
+      </div>
+
+      <div class="contact">
+        <div class="contact-item">📍 Delhi, India</div>
+        <div class="contact-item">📧 your.email@example.com</div>
+        <div class="contact-item">📱 +91 XXXXX XXXXX</div>
+        <div class="contact-item">🔗 linkedin.com/in/shubham-mishra</div>
+      </div>
+
+      <div class="sidebar-section" style="margin-top: 36px;">
+        <div class="section-title">Core Expertise</div>
+        <div class="skills">
+          <div class="skill">Program Management</div>
+          <div class="skill">Product Strategy</div>
+          <div class="skill">Agile & Scrum</div>
+          <div class="skill">JIRA Automation</div>
+          <div class="skill">AI Adoption</div>
+          <div class="skill">Cloud Fundamentals</div>
+          <div class="skill">Power BI</div>
+          <div class="skill">Stakeholder Mgmt</div>
+          <div class="skill">Process Optimization</div>
+          <div class="skill">Delivery Excellence</div>
+          <div class="skill">Azure</div>
+          <div class="skill">Gen AI Workflows</div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-title">Certifications</div>
+        <div class="contact-item">✔ Agile / Scrum Certified</div>
+        <div class="contact-item">✔ AZ-900 (In Progress)</div>
+        <div class="contact-item">✔ AI & Automation Enthusiast</div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-title">Career Vision</div>
+        <div class="contact-item">
+          Building toward becoming a high-impact AI-driven Product & Program Leader with expertise in Cloud, Automation, and GenAI.
+        </div>
+      </div>
+
+      <button class="download-btn" onclick="window.print()">Download Resume</button>
+    </aside>
+
+    <main class="main-content">
+
+      <section class="hero glass">
+        <div class="headline">
+          Driving <span class="gradient">AI-Powered</span> Product & Program Execution at Enterprise Scale.
+        </div>
+
+        <div class="summary">
+          Strategic Project & Program Management professional with 6+ years of experience leading enterprise initiatives, delivery optimization, workflow automation, and Agile transformation. Proven track record in implementing JIRA automations, improving operational efficiency, enabling GenAI adoption discussions, and driving measurable business impact. Passionate about the future intersection of Product Management, Artificial Intelligence, and Cloud Technology.
+        </div>
+
+        <div class="tagline">
+          Focus Areas: AI Product Thinking • Enterprise Delivery • Automation • Product Operations • Cloud & GenAI
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-value">6+</div>
+            <div class="metric-label">Years of Project & Program Leadership Experience</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-value">$5K+</div>
+            <div class="metric-label">Operational Savings Through JIRA Automation Initiatives</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-value">21 Days</div>
+            <div class="metric-label">Reduction Achieved in Enterprise Finance Delivery Cycle</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-card glass">
+        <div class="section-title">Professional Experience</div>
+
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="job-title">Project / Program Management Professional</div>
+            <div class="company">Enterprise Technology & Finance Transformation Domain</div>
+            <div class="job-description">
+              Leading cross-functional enterprise initiatives focused on Agile delivery, workflow optimization, stakeholder collaboration, automation enablement, and process modernization.
+
+              <ul>
+                <li>Implemented enterprise-level JIRA automation workflows that improved operational efficiency and reduced manual intervention.</li>
+                <li>Delivered process improvements resulting in approximately 21 days reduction in enterprise finance delivery timelines.</li>
+                <li>Presented automation use-cases and continuous improvement initiatives to PM leadership and enterprise stakeholders.</li>
+                <li>Contributed toward GenAI value-tracking discussions to measure AI adoption, productivity gains, and operational impact.</li>
+                <li>Managed project governance, sprint execution, risk tracking, delivery planning, and stakeholder communication.</li>
+                <li>Collaborated with business and technology teams to improve visibility, reporting, and execution alignment.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="job-title">Emerging Product & AI Strategy Contributor</div>
+            <div class="company">Self-Driven Career Transition Initiative</div>
+            <div class="job-description">
+              Actively building expertise across Product Management, Cloud, Artificial Intelligence, and Enterprise Automation to transition into high-impact AI-enabled product leadership roles.
+
+              <ul>
+                <li>Exploring GenAI applications in enterprise workflows, PM governance, and business operations.</li>
+                <li>Developing product thinking capabilities including PRDs, roadmap planning, prioritization, and metrics-based execution.</li>
+                <li>Studying Azure Cloud fundamentals and AI-driven enterprise solutions.</li>
+                <li>Researching scalable AI-product ecosystems and enterprise automation opportunities.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="two-column">
+
+        <div class="content-card glass">
+          <div class="section-title">Leadership & Impact</div>
+
+          <div class="job-description">
+            <ul>
+              <li>Led automation-focused continuous improvement initiatives across enterprise workflows.</li>
+              <li>Known for proactive stakeholder management and delivery governance.</li>
+              <li>Strong ability to bridge business and technology discussions.</li>
+              <li>Focused on measurable outcomes, operational efficiency, and scalable execution.</li>
+              <li>Experienced in Agile ceremonies, sprint planning, delivery tracking, and reporting.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card glass">
+          <div class="section-title">Tools & Platforms</div>
+
+          <div class="skills">
+            <div class="skill">JIRA</div>
+            <div class="skill">Confluence</div>
+            <div class="skill">Power BI</div>
+            <div class="skill">Azure</div>
+            <div class="skill">Excel</div>
+            <div class="skill">Agile Boards</div>
+            <div class="skill">Automation Rules</div>
+            <div class="skill">GenAI Tools</div>
+            <div class="skill">Workflow Analytics</div>
+            <div class="skill">Dashboarding</div>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="content-card glass">
+        <div class="section-title">Future Vision</div>
+
+        <div class="summary">
+          My long-term goal is to become a globally competitive AI + Cloud-savvy Product & Program Leader capable of building enterprise-scale digital transformation solutions. I aim to combine business strategy, AI adoption, automation thinking, and product execution to drive meaningful business impact across modern organizations.
+        </div>
+      </section>
+
+      <div class="footer">
+        Futuristic Interactive Resume • Designed with HTML, CSS & JavaScript • 2026 Edition
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.glass');
+
+    document.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+
+      cards.forEach(card => {
+        const rotateY = (x - 0.5) * 6;
+        const rotateX = (0.5 - y) * 6;
+
+        card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cards.forEach(card => {
+        card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+      });
+    })
