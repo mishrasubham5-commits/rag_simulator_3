@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Enterprise RAG Simulator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  background:#050816;
+  color:white;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:
+  radial-gradient(circle at top left,#7c3aed22,transparent 30%),
+  radial-gradient(circle at bottom right,#06b6d422,transparent 30%);
+  z-index:-1;
+}
+
+header{
+  padding:30px 50px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(5,8,22,0.8);
+}
+
+header h1{
+  font-size:42px;
+  font-weight:900;
+  background:linear-gradient(to right,#00e5ff,#7c4dff,#ff4d8d);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+header p{
+  color:#94a3b8;
+  margin-top:12px;
+  max-width:1000px;
+  line-height:1.7;
+}
+
+.main{
+  padding:40px;
+}
+
+.top-grid{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:25px;
+}
+
+.panel{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  padding:24px;
+  backdrop-filter: blur(10px);
+}
+
+.panel-title{
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.step-badge{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:linear-gradient(to right,#7c4dff,#00e5ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+textarea{
+  width:100%;
+  height:180px;
+  background:#0f172a;
+  border:none;
+  outline:none;
+  color:white;
+  border-radius:18px;
+  padding:18px;
+  resize:none;
+  font-size:14px;
+  line-height:1.7;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.input-group{
+  margin-top:18px;
+}
+
+.input-group label{
+  display:block;
+  margin-bottom:8px;
+  color:#cbd5e1;
+  font-size:14px;
+}
+
+input{
+  width:100%;
+  background:#0f172a;
+  border:none;
+  color:white;
+  border-radius:14px;
+  padding:12px;
+}
+
+button{
+  width:100%;
+  border:none;
+  padding:14px;
+  margin-top:16px;
+  border-radius:14px;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.3s;
+  font-size:15px;
+}
+
+button:hover{
+  transform:translateY(-2px);
+}
+
+.chunk-btn{
+  background:linear-gradient(to right,#2563eb,#3b82f6);
+}
+
+.embed-btn{
+  background:linear-gradient(to right,#0ea5e9,#06b6d4);
+}
+
+.vector-btn{
+  background:linear-gradient(to right,#16a34a,#22c55e);
+}
+
+.retrieve-btn{
+  background:linear-gradient(to right,#f97316,#fb923c);
+}
+
+.answer-btn{
+  background:linear-gradient(to right,#9333ea,#c084fc);
+}
+
+.right-side{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  padding:22px;
+}
+
+.card h2{
+  font-size:22px;
+  margin-bottom:18px;
+}
+
+.chunks-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px;
+}
+
+.chunk{
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:18px;
+  border-radius:18px;
+  transition:0.3s;
+}
+
+.chunk:hover{
+  border-color:#7c4dff;
+  transform:translateY(-4px);
+}
+
+.chunk h4{
+  color:#00e5ff;
+  margin-bottom:10px;
+}
+
+.chunk p{
+  color:#cbd5e1;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.table-container{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#111827;
+  color:#00e5ff;
+  padding:16px;
+  text-align:left;
+  font-size:14px;
+}
+
+td{
+  background:#0f172a;
+  padding:16px;
+  border-top:1px solid rgba(255,255,255,0.05);
+  font-size:13px;
+  color:#cbd5e1;
+}
+
+.retrieval{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.output-box{
+  background:#0f172a;
+  border-radius:18px;
+  padding:20px;
+  min-height:250px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.output-box h3{
+  margin-bottom:15px;
+  color:#00e5ff;
+}
+
+.answer{
+  line-height:1.9;
+  color:#d1d5db;
+}
+
+.badge{
+  display:inline-block;
+  background:#7c3aed33;
+  color:#c4b5fd;
+  padding:5px 12px;
+  border-radius:30px;
+  margin-bottom:12px;
+  font-size:12px;
+}
+
+.flow{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.flow-item{
+  background:#111827;
+  border-radius:14px;
+  padding:12px 16px;
+  font-size:13px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.highlight{
+  color:#00e5ff;
+  font-weight:700;
+}
+
+footer{
+  padding:40px;
+  text-align:center;
+  color:#94a3b8;
+}
+
+@media(max-width:1100px){
+
+  .top-grid{
+    grid-template-columns:1fr;
+  }
+
+  .retrieval{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <h1>Enterprise RAG Simulator</h1>
+
+  <p>
+    Interactive futuristic visualization of Retrieval-Augmented Generation (RAG).
+    Learn how modern AI systems chunk documents, create embeddings, store vectors,
+    retrieve semantic context, and generate grounded enterprise AI responses.
+  </p>
+
+</header>
+
+<div class="main">
+
+  <div class="top-grid">
+
+    <!-- LEFT PANEL -->
+
+    <div class="panel">
+
+      <div class="step-badge">1</div>
+
+      <div class="panel-title">Document Input & Chunking</div>
+
+      <textarea id="documentInput">
+SunLife Payment API failed after deployment because authentication tokens expired unexpectedly. Engineering team identified middleware refresh issue. Root cause analysis confirmed token session expiration bug impacting 12 microservices. Jira incident PM-482 created. Production rollback completed successfully after hotfix deployment.
+      </textarea>
+
+      <div class="input-group">
+        <label>Chunk Size</label>
+        <input type="number" value="120">
+      </div>
+
+      <div class="input-group">
+        <label>Overlap</label>
+        <input type="number" value="30">
+      </div>
+
+      <button class="chunk-btn" onclick="createChunks()">
+        Chunk Document
+      </button>
+
+      <button class="embed-btn" onclick="createEmbeddings()">
+        Create Embeddings
+      </button>
+
+      <button class="vector-btn" onclick="saveVectors()">
+        Save To Vector DB
+      </button>
+
+      <hr style="margin:25px 0;border-color:rgba(255,255,255,0.06)">
+
+      <div class="step-badge">2</div>
+
+      <div class="panel-title">Query & Retrieval</div>
+
+      <textarea id="queryInput" style="height:110px">
+Why did payment API fail last month?
+      </textarea>
+
+      <button class="retrieve-btn" onclick="retrieveChunks()">
+        Retrieve Relevant Chunks
+      </button>
+
+      <button class="answer-btn" onclick="generateAnswer()">
+        Generate AI Answer
+      </button>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right-side">
+
+      <!-- CHUNKS -->
+
+      <div class="card">
+
+        <h2>📄 Document Chunks</h2>
+
+        <div class="chunks-grid" id="chunksGrid">
+
+          <div class="chunk">
+            <h4>No Chunks Yet</h4>
+            <p>Click "Chunk Document" to simulate semantic chunking.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- EMBEDDINGS -->
+
+      <div class="card">
+
+        <h2>🧠 Embeddings & Metadata</h2>
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Chunk ID</th>
+                <th>Chunk Content</th>
+                <th>Embedding Vector</th>
+                <th>Metadata</th>
+              </tr>
+            </thead>
+
+            <tbody id="embeddingTable">
+
+              <tr>
+                <td colspan="4">
+                  No embeddings generated yet.
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+      <!-- RETRIEVAL -->
+
+      <div class="retrieval">
+
+        <div class="card">
+
+          <h2>🔎 Retrieval Results</h2>
+
+          <div class="output-box" id="retrievalBox">
+
+            <div class="badge">Semantic Search</div>
+
+            Waiting for retrieval...
+
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <h2>🤖 AI Generated Answer</h2>
+
+          <div class="output-box">
+
+            <div class="answer" id="answerBox">
+
+              AI response will appear here...
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FLOW -->
+
+      <div class="card">
+
+        <h2>⚡ RAG Pipeline Flow</h2>
+
+        <div class="flow">
+
+          <div class="flow-item">Document Upload</div>
+          <div class="flow-item">Chunking</div>
+          <div class="flow-item">Embeddings</div>
+          <div class="flow-item">Vector Database</div>
+          <div class="flow-item">Semantic Search</div>
+          <div class="flow-item">Context Injection</div>
+          <div class="flow-item">LLM Response</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+
+  Built using HTML • CSS • JavaScript  
+  Futuristic AI Engineering Prototype for RAG Learning & LinkedIn Showcase
+
+</footer>
+
+<script>
+
+let chunks = [];
+
+function createChunks(){
+
+  const text = document.getElementById("documentInput").value;
+
+  chunks = [
+    text.substring(0,120),
+    text.substring(80,220),
+    text.substring(180,320)
+  ];
+
+  let html = "";
+
+  chunks.forEach((chunk,index)=>{
+
+    html += `
+      <div class="chunk">
+        <h4>Chunk ${index+1}</h4>
+        <p>${chunk}</p>
+      </div>
+    `;
+
+  });
+
+  document.getElementById("chunksGrid").innerHTML = html;
+
+}
+
+function createEmbeddings(){
+
+  if(chunks.length === 0){
+    alert("Please create chunks first.");
+    return;
+  }
+
+  let table = "";
+
+  chunks.forEach((chunk,index)=>{
+
+    table += `
+      <tr>
+        <td>#${index+1}</td>
+        <td>${chunk}</td>
+        <td>[0.${index}21, -0.${index}82, 0.${index}55, 0.${index}91]</td>
+        <td>
+          Source: Jira Incident <br>
+          Confidence: 94%
+        </td>
+      </tr>
+    `;
+
+  });
+
+  document.getElementById("embeddingTable").innerHTML = table;
+
+}
+
+function saveVectors(){
+
+  alert("✅ Vector embeddings stored successfully in Pinecone Vector Database.");
+
+}
+
+function retrieveChunks(){
+
+  document.getElementById("retrievalBox").innerHTML = `
+
+    <div class="badge">Top Semantic Matches</div>
+
+    <p class="answer">
+
+      <span class="highlight">Match #1:</span><br><br>
+
+      "Payment API failed because authentication token refresh middleware expired unexpectedly."
+
+      <br><br>
+
+      <span class="highlight">Match #2:</span><br><br>
+
+      "Root cause analysis confirmed session expiration bug impacting production microservices."
+
+      <br><br>
+
+      <span class="highlight">Similarity Score:</span> 96.4%
+
+    </p>
+
+  `;
+
+}
+
+function generateAnswer(){
+
+  document.getElementById("answerBox").innerHTML = `
+
+    <div class="badge">Grounded Enterprise Response</div>
+
+    The payment API failed after deployment because authentication session tokens
+    expired unexpectedly inside middleware services.
+
+    Retrieved semantic chunks from the vector database confirmed that:
+
+    <br><br>
+
+    • Token refresh logic failed after deployment  
+    • 12 microservices were impacted  
+    • Jira Incident PM-482 was triggered  
+    • Engineering team executed rollback + hotfix deployment  
+
+    <br><br>
+
+    <span class="highlight">
+      This answer was generated using Retrieval-Augmented Generation (RAG),
+      where enterprise context was retrieved before sending data to the LLM.
+    </span>
+
+  `;
+
+}
+
+</script>
+
+</body>
+</html>
