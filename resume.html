@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubham Mishra | AI Product & Program Leader</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+--bg:#030712;
+--card:rgba(15,23,42,0.75);
+--border:rgba(255,255,255,0.08);
+--primary:#00E5FF;
+--secondary:#7C3AED;
+--text:#F8FAFC;
+--muted:#94A3B8;
+--success:#00FF9D;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:radial-gradient(circle at top left,#132238 0%,#07111f 45%,#020617 100%);
+color:var(--text);
+padding:40px;
+overflow-x:hidden;
+}
+
+body::before{
+content:'';
+position:fixed;
+width:500px;
+height:500px;
+background:rgba(0,229,255,0.08);
+border-radius:50%;
+filter:blur(120px);
+top:-100px;
+right:-100px;
+z-index:-1;
+}
+
+body::after{
+content:'';
+position:fixed;
+width:450px;
+height:450px;
+background:rgba(124,58,237,0.08);
+border-radius:50%;
+filter:blur(120px);
+bottom:-150px;
+left:-120px;
+z-index:-1;
+}
+
+.container{
+max-width:1500px;
+margin:auto;
+display:grid;
+grid-template-columns:360px 1fr;
+gap:28px;
+}
+
+.glass{
+background:var(--card);
+border:1px solid var(--border);
+backdrop-filter:blur(18px);
+border-radius:28px;
+box-shadow:0 10px 40px rgba(0,0,0,0.35);
+}
+
+.sidebar{
+padding:32px;
+position:sticky;
+top:20px;
+height:fit-content;
+}
+
+.profile{
+text-align:center;
+margin-bottom:30px;
+}
+
+.avatar{
+width:130px;
+height:130px;
+border-radius:32px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:48px;
+font-weight:900;
+margin:auto;
+margin-bottom:20px;
+box-shadow:0 0 40px rgba(0,229,255,0.35);
+}
+
+.name{
+font-size:34px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.role{
+font-size:14px;
+font-weight:700;
+letter-spacing:1.2px;
+text-transform:uppercase;
+color:var(--primary);
+}
+
+.contact{
+display:flex;
+flex-direction:column;
+gap:14px;
+margin-top:28px;
+}
+
+.contact-item{
+padding:14px 16px;
+border-radius:16px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+font-size:14px;
+color:var(--muted);
+}
+
+.section{
+margin-top:34px;
+}
+
+.section-title{
+font-size:14px;
+font-weight:800;
+letter-spacing:1px;
+text-transform:uppercase;
+margin-bottom:18px;
+color:var(--primary);
+}
+
+.skills{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.skill{
+padding:10px 14px;
+border-radius:14px;
+background:rgba(0,229,255,0.08);
+border:1px solid rgba(0,229,255,0.18);
+font-size:13px;
+}
+
+.main{
+display:flex;
+flex-direction:column;
+gap:28px;
+}
+
+.hero{
+padding:42px;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+width:300px;
+height:300px;
+background:rgba(0,229,255,0.08);
+border-radius:50%;
+right:-100px;
+top:-100px;
+}
+
+.headline{
+font-size:58px;
+line-height:1.08;
+font-weight:900;
+max-width:900px;
+margin-bottom:22px;
+}
+
+.gradient{
+background:linear-gradient(90deg,var(--primary),white);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.summary{
+max-width:980px;
+font-size:16px;
+line-height:1.9;
+color:var(--muted);
+}
+
+.metrics{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-top:32px;
+}
+
+.metric{
+padding:22px;
+border-radius:22px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+}
+
+.metric-value{
+font-size:36px;
+font-weight:900;
+color:var(--success);
+margin-bottom:8px;
+}
+
+.metric-label{
+font-size:13px;
+line-height:1.6;
+color:var(--muted);
+}
+
+.card{
+padding:34px;
+}
+
+.timeline{
+position:relative;
+padding-left:30px;
+}
+
+.timeline::before{
+content:'';
+position:absolute;
+left:8px;
+top:0;
+width:2px;
+height:100%;
+background:linear-gradient(var(--primary),transparent);
+}
+
+.item{
+position:relative;
+margin-bottom:42px;
+}
+
+.item::before{
+content:'';
+position:absolute;
+left:-29px;
+top:8px;
+width:16px;
+height:16px;
+border-radius:50%;
+background:var(--primary);
+box-shadow:0 0 14px var(--primary);
+}
+
+.job-title{
+font-size:24px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.company{
+font-size:14px;
+font-weight:700;
+color:var(--primary);
+margin-bottom:16px;
+}
+
+.description{
+color:var(--muted);
+line-height:1.9;
+font-size:15px;
+}
+
+ul{
+padding-left:22px;
+margin-top:14px;
+}
+
+li{
+margin-bottom:12px;
+}
+
+.two-col{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:28px;
+}
+
+.quote{
+padding:24px;
+border-radius:22px;
+background:rgba(124,58,237,0.12);
+border:1px solid rgba(124,58,237,0.22);
+font-size:18px;
+line-height:1.8;
+color:#E9D5FF;
+font-weight:500;
+}
+
+.download{
+margin-top:26px;
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
+font-weight:800;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+cursor:pointer;
+transition:0.3s ease;
+}
+
+.download:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(0,229,255,0.25);
+}
+
+.footer{
+text-align:center;
+font-size:13px;
+color:var(--muted);
+padding-bottom:20px;
+}
+
+@media(max-width:1200px){
+.container{
+grid-template-columns:1fr;
+}
+
+.sidebar{
+position:relative;
+}
+
+.metrics,
+.two-col{
+grid-template-columns:1fr;
+}
+}
+
+@media(max-width:768px){
+body{
+padding:18px;
+}
+
+.hero,
+.card,
+.sidebar{
+padding:24px;
+}
+
+.headline{
+font-size:38px;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<aside class="sidebar glass">
+
+<div class="profile">
+<div class="avatar">SM</div>
+<div class="name">Shubham Mishra</div>
+<div class="role">AI + Product Program Leader</div>
+</div>
+
+<div class="contact">
+<div class="contact-item">📍 Delhi, India</div>
+<div class="contact-item">📧 your.email@example.com</div>
+<div class="contact-item">📱 +91 XXXXX XXXXX</div>
+<div class="contact-item">🔗 linkedin.com/in/shubham-mishra</div>
+</div>
+
+<div class="section">
+<div class="section-title">Core Expertise</div>
+<div class="skills">
+<div class="skill">Program Management</div>
+<div class="skill">Product Strategy</div>
+<div class="skill">Agile Delivery</div>
+<div class="skill">JIRA Automation</div>
+<div class="skill">GenAI Transformation</div>
+<div class="skill">AI Workflows</div>
+<div class="skill">Cloud Fundamentals</div>
+<div class="skill">Power BI</div>
+<div class="skill">Stakeholder Management</div>
+<div class="skill">Finance Transformation</div>
+<div class="skill">Process Optimization</div>
+<div class="skill">Delivery Governance</div>
+<div class="skill">Sprint Execution</div>
+<div class="skill">Automation Thinking</div>
+<div class="skill">RAG Systems</div>
+<div class="skill">Prompt Engineering</div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title">Certifications & Learning</div>
+<div class="contact-item">✔ Agile / Scrum Certified</div>
+<div class="contact-item">✔ AZ-900 Preparation</div>
+<div class="contact-item">✔ GenAI & Product Strategy Learning</div>
+<div class="contact-item">✔ Enterprise Automation Practitioner</div>
+</div>
+
+<div class="section">
+<div class="section-title">Personal Philosophy</div>
+<div class="quote">
+"The future belongs to leaders who can combine business strategy, AI systems, automation, and product thinking into scalable enterprise impact."
+</div>
+</div>
+
+<button class="download" onclick="window.print()">Download Futuristic Resume</button>
+
+</aside>
+
+<main class="main">
+
+<section class="hero glass">
+
+<div class="headline">
+Driving <span class="gradient">AI-Powered Enterprise Transformation</span> Through Product, Program & Automation Leadership.
+</div>
+
+<div class="summary">
+Strategic Program & Project Management professional with 6+ years of experience leading enterprise transformation initiatives across technology and finance domains. Strong expertise in Agile delivery, stakeholder management, governance execution, workflow automation, operational excellence, and process optimization within large-scale enterprise ecosystems.
+<br><br>
+Recognized for implementing high-impact JIRA automation initiatives, reducing enterprise delivery inefficiencies, improving execution visibility, and driving measurable operational savings. Proven ability to bridge business and technology conversations while aligning delivery execution with organizational objectives.
+<br><br>
+Currently transitioning toward becoming an AI + Cloud-savvy Product & Program Leader focused on GenAI-enabled enterprise systems, intelligent workflow automation, AI-driven governance, product operations, and scalable digital transformation.
+</div>
+
+<div class="metrics">
+
+<div class="metric">
+<div class="metric-value">6+</div>
+<div class="metric-label">Years of Enterprise Project & Program Leadership Experience</div>
+</div>
+
+<div class="metric">
+<div class="metric-value">$5K+</div>
+<div class="metric-label">Operational Savings Generated Through JIRA Automation Initiatives</div>
+</div>
+
+<div class="metric">
+<div class="metric-value">21 Days</div>
+<div class="metric-label">Reduction Achieved in Enterprise Finance Delivery Timelines</div>
+</div>
+
+<div class="metric">
+<div class="metric-value">AI</div>
+<div class="metric-label">Focused Career Evolution Toward AI + Product Leadership</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="card glass">
+<div class="section-title">Professional Experience & Enterprise Impact</div>
+
+<div class="timeline">
+
+<div class="item">
+<div class="job-title">Senior Project / Program Management Professional</div>
+<div class="company">Enterprise Technology, Agile Delivery & Finance Transformation Domain</div>
+
+<div class="description">
+Leading enterprise-scale delivery and transformation initiatives with strong focus on Agile governance, operational efficiency, workflow modernization, stakeholder alignment, automation enablement, and delivery optimization.
+
+<ul>
+<li>Implemented enterprise JIRA Automation workflows that reduced manual effort, improved governance accuracy, and streamlined operational execution across delivery teams.</li>
+
+<li>Designed and deployed automation logic around ticket lifecycle management including End Date update handling workflows, improving reporting reliability and execution consistency.</li>
+
+<li>Delivered process optimization initiatives that reduced enterprise finance delivery timelines by approximately 21 days, significantly improving execution speed and stakeholder visibility.</li>
+
+<li>Created and presented JIRA Automation implementation showcases to PM leadership teams, demonstrating operational savings of approximately $5000 and identifying scalable automation opportunities.</li>
+
+<li>Actively contributed to enterprise discussions focused on measuring GenAI value realization, productivity impact, automation opportunities, and AI-driven operational efficiency.</li>
+
+<li>Managed Agile execution activities including sprint planning, backlog alignment, delivery tracking, dependency management, governance reviews, and stakeholder communication.</li>
+
+<li>Collaborated with business and technology stakeholders to align priorities, improve execution transparency, and strengthen delivery governance frameworks.</li>
+
+<li>Enhanced reporting visibility through dashboards, workflow analytics, governance tracking, and operational reporting mechanisms using tools such as JIRA, Confluence, and Power BI.</li>
+
+<li>Recognized for proactive ownership mindset, structured communication, continuous improvement thinking, and strategic execution capabilities.</li>
+</ul>
+</div>
+</div>
+
+<div class="item">
+<div class="job-title">AI, Product Strategy & Cloud Transformation Enthusiast</div>
+<div class="company">Self-Driven Future Leadership Development Initiative</div>
+
+<div class="description">
+Strategically building expertise across Product Management, Artificial Intelligence, Cloud Technologies, Enterprise Automation, and AI-enabled operational systems to transition into globally competitive product and transformation leadership roles.
+
+<ul>
+<li>Exploring Product Management frameworks including PRDs, product thinking, roadmap strategy, prioritization models, metrics-driven execution, and user-centric product delivery.</li>
+
+<li>Studying GenAI implementation opportunities across enterprise governance, workflow automation, AI copilots, operational productivity systems, and intelligent delivery ecosystems.</li>
+
+<li>Researching Retrieval-Augmented Generation (RAG), embeddings, vector databases, prompt engineering, enterprise AI architectures, and intelligent automation systems.</li>
+
+<li>Preparing for Microsoft Azure AZ-900 certification to strengthen cloud infrastructure and AI ecosystem understanding.</li>
+
+<li>Continuously improving strategic communication, leadership storytelling, enterprise presentation skills, and AI transformation thinking.</li>
+
+<li>Building long-term capabilities to lead AI-powered enterprise products, cloud transformation programs, and scalable intelligent business systems.</li>
+</ul>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="two-col">
+
+<div class="card glass">
+<div class="section-title">Leadership & Working Style</div>
+
+<div class="description">
+<ul>
+<li>Strong believer in automation-first operational thinking.</li>
+<li>Focused on measurable business outcomes over activity-based execution.</li>
+<li>Bridges business communication with technical execution effectively.</li>
+<li>Comfortable working with leadership stakeholders and cross-functional teams.</li>
+<li>Highly disciplined with strong execution ownership and delivery focus.</li>
+<li>Continuous learner focused on AI, Cloud, Product Strategy, and Enterprise Transformation.</li>
+<li>Known for proactive communication, strategic mindset, and governance excellence.</li>
+<li>Passionate about future-ready enterprise systems powered by AI and automation.</li>
+</ul>
+</div>
+</div>
+
+<div class="card glass">
+<div class="section-title">Tools & Technology Ecosystem</div>
+
+<div class="skills">
+<div class="skill">JIRA</div>
+<div class="skill">Confluence</div>
+<div class="skill">Power BI</div>
+<div class="skill">Azure</div>
+<div class="skill">Agile Boards</div>
+<div class="skill">Sprint Tracking</div>
+<div class="skill">Workflow Automation</div>
+<div class="skill">Dashboarding</div>
+<div class="skill">GenAI Tools</div>
+<div class="skill">RAG Concepts</div>
+<div class="skill">Enterprise Reporting</div>
+<div class="skill">Prompt Engineering</div>
+<div class="skill">Stakeholder Reporting</div>
+<div class="skill">Product Documentation</div>
+<div class="skill">Automation Rules</div>
+<div class="skill">AI Productivity Systems</div>
+</div>
+</div>
+
+</section>
+
+<section class="card glass">
+<div class="section-title">Long-Term Vision & Strategic Direction</div>
+
+<div class="summary">
+My long-term mission is to become a world-class AI-enabled Product & Program Management leader capable of driving enterprise-scale digital transformation across global organizations.
+<br><br>
+Over the next 4–5 years, I aim to combine Product Strategy, Artificial Intelligence, Cloud Technologies, Enterprise Delivery, Automation Thinking, and Business Leadership into a unique professional identity capable of building scalable intelligent systems.
+<br><br>
+I am intentionally positioning myself toward high-growth opportunities within top global organizations where I can lead AI-powered enterprise products, cloud-enabled operational ecosystems, intelligent governance systems, and GenAI transformation programs.
+<br><br>
+Beyond career growth, my broader vision includes building long-term financial freedom, leadership influence, technical-business excellence, and meaningful impact through future-ready enterprise innovation.
+</div>
+</section>
+
+<div class="footer">
+Futuristic Interactive Resume • AI + Product Leadership Edition • Designed in HTML, CSS & JavaScript
+</div>
+
+</main>
+
+</div>
+
+<script>
+
+const cards=document.querySelectorAll('.glass');
+
+document.addEventListener('mousemove',(e)=>{
+const x=e.clientX/window.innerWidth;
+const y=e.clientY/window.innerHeight;
+
+cards.forEach(card=>{
+const rotateY=(x-0.5)*6;
+const rotateX=(0.5-y)*6;
+
+card.style.transform=`perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+});
+
+document.addEventListener('mouseleave',()=>{
+cards.forEach(card=>{
+card.style.transform='perspective(1200px) rotateX(0deg) rotateY(0deg)';
+});
+});
+
+console.log('AI Futuristic Resume Loaded Successfully');
+
+</script>
+
+</body>
+</html>
