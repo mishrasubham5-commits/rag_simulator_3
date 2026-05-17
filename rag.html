@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RAG Simulator - Retrieval Augmented Generation</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body{
+      background:#050816;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    .bg{
+      position:fixed;
+      width:100%;
+      height:100%;
+      top:0;
+      left:0;
+      background:
+      radial-gradient(circle at top left,#7c3aed33,transparent 25%),
+      radial-gradient(circle at bottom right,#06b6d433,transparent 25%),
+      #050816;
+      z-index:-1;
+    }
+
+    header{
+      padding:40px 60px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(5,8,22,0.7);
+    }
+
+    header h1{
+      font-size:42px;
+      font-weight:800;
+      background:linear-gradient(to right,#00e5ff,#7c4dff,#ff4081);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    header p{
+      margin-top:10px;
+      color:#9ca3af;
+      max-width:900px;
+      line-height:1.6;
+    }
+
+    .main{
+      padding:50px;
+      display:flex;
+      flex-direction:column;
+      gap:40px;
+    }
+
+    .flow-container{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;
+      padding:24px;
+      transition:0.4s ease;
+      position:relative;
+      overflow:hidden;
+      min-height:260px;
+      backdrop-filter: blur(12px);
+    }
+
+    .card:hover{
+      transform:translateY(-8px) scale(1.02);
+      border-color:#7c4dff;
+      box-shadow:0 0 25px rgba(124,77,255,0.3);
+    }
+
+    .step{
+      position:absolute;
+      top:18px;
+      right:18px;
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      background:linear-gradient(to right,#7c4dff,#00e5ff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:bold;
+      font-size:14px;
+    }
+
+    .card h2{
+      margin-top:20px;
+      font-size:24px;
+      margin-bottom:14px;
+    }
+
+    .card p{
+      color:#cbd5e1;
+      line-height:1.7;
+      font-size:15px;
+    }
+
+    .icon{
+      font-size:50px;
+    }
+
+    .pipeline{
+      margin-top:30px;
+      background:rgba(255,255,255,0.04);
+      border-radius:25px;
+      padding:35px;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .pipeline h2{
+      margin-bottom:25px;
+      font-size:32px;
+    }
+
+    .pipeline-flow{
+      display:flex;
+      gap:20px;
+      overflow-x:auto;
+      padding-bottom:20px;
+    }
+
+    .pipe{
+      min-width:220px;
+      background:#0f172a;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      padding:20px;
+      position:relative;
+      transition:0.4s;
+    }
+
+    .pipe:hover{
+      background:#111827;
+      transform:scale(1.04);
+    }
+
+    .pipe::after{
+      content:"➜";
+      position:absolute;
+      right:-18px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:26px;
+      color:#7c4dff;
+    }
+
+    .pipe:last-child::after{
+      display:none;
+    }
+
+    .pipe h3{
+      margin-bottom:10px;
+      color:#00e5ff;
+    }
+
+    .pipe p{
+      color:#cbd5e1;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .interactive{
+      margin-top:40px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px;
+    }
+
+    .simulator-box{
+      background:rgba(255,255,255,0.04);
+      border-radius:24px;
+      padding:28px;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    textarea{
+      width:100%;
+      height:160px;
+      background:#0f172a;
+      border:none;
+      outline:none;
+      border-radius:16px;
+      padding:18px;
+      color:white;
+      font-size:15px;
+      resize:none;
+      margin-top:15px;
+    }
+
+    button{
+      margin-top:18px;
+      padding:14px 24px;
+      border:none;
+      border-radius:14px;
+      background:linear-gradient(to right,#7c4dff,#00e5ff);
+      color:white;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.3s;
+      font-size:15px;
+    }
+
+    button:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 20px rgba(124,77,255,0.4);
+    }
+
+    .output{
+      margin-top:20px;
+      background:#0f172a;
+      border-radius:16px;
+      padding:20px;
+      min-height:180px;
+      line-height:1.8;
+      color:#d1d5db;
+      white-space:pre-wrap;
+    }
+
+    .highlight{
+      color:#00e5ff;
+      font-weight:bold;
+    }
+
+    footer{
+      padding:50px;
+      text-align:center;
+      color:#9ca3af;
+      font-size:14px;
+    }
+
+    .glow{
+      position:absolute;
+      width:200px;
+      height:200px;
+      border-radius:50%;
+      background:#7c4dff33;
+      filter:blur(60px);
+      top:-80px;
+      right:-80px;
+    }
+
+    @media(max-width:900px){
+      .interactive{
+        grid-template-columns:1fr;
+      }
+
+      header{
+        padding:30px;
+      }
+
+      .main{
+        padding:25px;
+      }
+
+      header h1{
+        font-size:32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<header>
+  <h1>RAG Simulator</h1>
+  <p>
+    A futuristic interactive visualization of Retrieval-Augmented Generation (RAG).
+    Understand how enterprise AI systems retrieve semantic information from vector databases
+    and generate grounded responses using LLMs like GPT, Claude, Gemini, and LLaMA.
+  </p>
+</header>
+
+<section class="main">
+
+  <div class="flow-container">
+
+    <div class="card">
+      <div class="glow"></div>
+      <div class="step">1</div>
+      <div class="icon">📄</div>
+      <h2>Data Collection</h2>
+      <p>
+        Raw enterprise knowledge such as PDFs, Jira tickets, emails,
+        Confluence docs, SOPs, APIs, and databases are collected.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="glow"></div>
+      <div class="step">2</div>
+      <div class="icon">✂️</div>
+      <h2>Chunking</h2>
+      <p>
+        Large documents are broken into smaller meaningful chunks
+        so embeddings can capture semantic meaning efficiently.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="glow"></div>
+      <div class="step">3</div>
+      <div class="icon">🧠</div>
+      <h2>Embeddings</h2>
+      <p>
+        Each chunk is converted into mathematical vector embeddings
+        representing semantic meaning in high-dimensional space.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="glow"></div>
+      <div class="step">4</div>
+      <div class="icon">🗂️</div>
+      <h2>Vector Database</h2>
+      <p>
+        Embeddings are stored in vector databases like Pinecone,
+        ChromaDB, Weaviate, or Milvus for semantic retrieval.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="glow"></div>
+      <div class="step">5</div>
+      <div class="icon">🔎</div>
+      <h2>Semantic Search</h2>
+      <p>
+        User query is converted into embeddings and matched
+        against the closest semantic vectors using similarity search.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="glow"></div>
+      <div class="step">6</div>
+      <div class="icon">🤖</div>
+      <h2>LLM Generation</h2>
+      <p>
+        Retrieved chunks are injected into the prompt context,
+        allowing the LLM to generate grounded and accurate responses.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="pipeline">
+
+    <h2>RAG Architecture Flow</h2>
+
+    <div class="pipeline-flow">
+
+      <div class="pipe">
+        <h3>Knowledge Base</h3>
+        <p>PDFs, Docs, Jira, APIs, Wikis</p>
+      </div>
+
+      <div class="pipe">
+        <h3>Chunking</h3>
+        <p>Split into semantic text chunks</p>
+      </div>
+
+      <div class="pipe">
+        <h3>Embeddings</h3>
+        <p>Convert text into vector representation</p>
+      </div>
+
+      <div class="pipe">
+        <h3>Vector DB</h3>
+        <p>Store embeddings for retrieval</p>
+      </div>
+
+      <div class="pipe">
+        <h3>User Query</h3>
+        <p>Convert question into embeddings</p>
+      </div>
+
+      <div class="pipe">
+        <h3>Similarity Search</h3>
+        <p>Retrieve most relevant chunks</p>
+      </div>
+
+      <div class="pipe">
+        <h3>LLM</h3>
+        <p>Generate contextual answer</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="interactive">
+
+    <div class="simulator-box">
+      <h2>🧪 Interactive RAG Query Simulator</h2>
+
+      <textarea id="queryInput" placeholder="Ask a query like: Why did payment API fail last month?"></textarea>
+
+      <button onclick="simulateRAG()">Run RAG Pipeline</button>
+
+      <div class="output" id="output">
+        Waiting for user query...
+      </div>
+    </div>
+
+    <div class="simulator-box">
+      <h2>📊 Enterprise AI Insights</h2>
+
+      <div class="output">
+        <span class="highlight">Why RAG?</span>
+
+        • Reduces hallucinations  
+        • Uses enterprise/private data  
+        • No retraining required  
+        • Faster than fine-tuning  
+        • Real-time knowledge retrieval  
+        • Context-aware AI responses  
+
+        --------------------------------
+
+        <span class="highlight">Popular Vector Databases</span>
+
+        • Pinecone  
+        • ChromaDB  
+        • Weaviate  
+        • Milvus  
+        • FAISS  
+
+        --------------------------------
+
+        <span class="highlight">Popular LLMs</span>
+
+        • GPT-4  
+        • Claude  
+        • Gemini  
+        • LLaMA  
+        • Mistral
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  Built with HTML, CSS & JavaScript • Futuristic RAG Visualizer • AI Architecture Prototype
+</footer>
+
+<script>
+
+  function simulateRAG(){
+
+    const query = document.getElementById("queryInput").value;
+
+    const output = document.getElementById("output");
+
+    if(query.trim() === ""){
+      output.innerHTML = "⚠️ Please enter a query first.";
+      return;
+    }
+
+    output.innerHTML = `
+🚀 Starting Retrieval-Augmented Generation Pipeline...
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+📄 Step 1: Receiving User Query
+"${query}"
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+🧠 Step 2: Converting Query into Vector Embeddings
+
+[0.21, -0.88, 0.56, 0.91, -0.44...]
+
+Semantic meaning generated successfully.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+🔎 Step 3: Searching Vector Database
+
+Top semantic matches found:
+✔ Incident Report #4021
+✔ API Failure RCA Document
+✔ Payment Gateway Logs
+✔ Jira Ticket PM-482
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+📦 Step 4: Retrieved Relevant Chunks
+
+"Payment API failure occurred due to token expiration issue
+inside authentication middleware after deployment."
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+🤖 Step 5: Injecting Context into LLM Prompt
+
+Context + User Query sent to GPT/Claude/LLaMA.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Final AI Generated Response:
+
+The payment API failure last month was primarily caused by
+authentication token expiration after deployment. The middleware
+was unable to refresh expired session tokens, resulting in
+request failures across multiple services.
+
+RAG successfully grounded the response using enterprise data.
+    `;
+  }
+
+</script>
+
+</body>
+</html>
