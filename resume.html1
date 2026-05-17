@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subham | Futuristic Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
+        :root {
+            --neon-blue: #00f5ff;
+            --neon-purple: #9d4edd;
+            --neon-pink: #ff00aa;
+        }
+        
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        .header-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .neon-text {
+            text-shadow: 
+                0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-blue),
+                0 0 40px var(--neon-purple);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scanline {
+            position: relative;
+        }
+        
+        .scanline::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                transparent,
+                rgba(0, 245, 255, 0.15),
+                transparent
+            );
+            animation: scan 4s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+
+        .holo-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .holo-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(45deg, #00f5ff, #9d4edd, #ff00aa, #00f5ff);
+            background-size: 300%;
+            animation: holo-rotate 8s linear infinite;
+            z-index: -1;
+            filter: blur(8px);
+            opacity: 0.6;
+        }
+
+        @keyframes holo-rotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .terminal {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.8);
+            border-left: 4px solid var(--neon-blue);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center text-xs font-bold">S</div>
+                <span class="header-font text-2xl font-semibold tracking-tighter neon-text">SUBHAM</span>
+            </div>
+            
+            <div class="flex gap-8 text-sm uppercase tracking-widest">
+                <a href="#about" class="hover:text-cyan-400">About</a>
+                <a href="#experience" class="hover:text-cyan-400">Experience</a>
+                <a href="#projects" class="hover:text-cyan-400">Projects</a>
+                <a href="#skills" class="hover:text-cyan-400">Skills</a>
+                <a href="#education" class="hover:text-cyan-400">Education</a>
+            </div>
+            
+            <a href="#" onclick="downloadResume()" 
+               class="px-6 py-2.5 rounded-full border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black text-sm font-medium flex items-center gap-2">
+                <i class="fas fa-download"></i>
+                DOWNLOAD PDF
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="min-h-screen flex items-center relative scanline pt-20">
+        <div class="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-xs tracking-widest mb-6">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    AVAILABLE FOR OPPORTUNITIES • DELHI, INDIA
+                </div>
+                
+                <h1 class="header-font text-7xl md:text-8xl font-bold leading-none mb-6 neon-text">
+                    SUBHAM<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">SOFTWARE ENGINEER</span>
+                </h1>
+                
+                <p class="text-2xl text-gray-400 max-w-md mb-10">
+                    Crafting next-gen digital experiences with code that pushes boundaries. 
+                    Passionate about AI, cloud architecture, and scalable systems.
+                </p>
+                
+                <div class="flex gap-4">
+                    <a href="#contact" 
+                       class="px-8 py-4 bg-white text-black rounded-2xl font-semibold flex items-center gap-3 hover:scale-105">
+                        <i class="fas fa-paper-plane"></i>
+                        LET'S CONNECT
+                    </a>
+                    <a href="#experience" 
+                       class="px-8 py-4 border border-white/30 hover:border-white/60 rounded-2xl font-medium">
+                        View Journey →
+                    </a>
+                </div>
+                
+                <div class="mt-16 flex gap-10 text-sm">
+                    <div>
+                        <div class="text-cyan-400 text-xs tracking-widest">CURRENT ROLE</div>
+                        <div class="font-medium">Senior Software Engineer</div>
+                    </div>
+                    <div>
+                        <div class="text-cyan-400 text-xs tracking-widest">LOCATION</div>
+                        <div class="font-medium">Delhi, India</div>
+                    </div>
+                    <div>
+                        <div class="text-cyan-400 text-xs tracking-widest">EXPERIENCE</div>
+                        <div class="font-medium">5+ Years</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Futuristic Portrait Placeholder -->
+            <div class="relative flex justify-center">
+                <div class="w-80 h-80 rounded-3xl overflow-hidden border-4 border-white/10 holo-card">
+                    <div class="w-full h-full bg-gradient-to-br from-purple-900 via-cyan-900 to-black flex items-center justify-center text-8xl font-black text-white/10">
+                        SUBHAM
+                    </div>
+                    <!-- You can replace with real image via <img> -->
+                </div>
+                
+                <!-- Floating badges -->
+                <div class="absolute -top-6 -right-6 glass px-6 py-3 rounded-2xl text-sm flex items-center gap-3 border border-cyan-400/30">
+                    <i class="fas fa-trophy text-yellow-400"></i>
+                    <div>
+                        <div class="font-medium">Top 1% Talent</div>
+                        <div class="text-xs text-gray-400">India Tech Community</div>
+                    </div>
+                </div>
+                
+                <div class="absolute -bottom-6 -left-6 glass px-6 py-3 rounded-2xl text-sm flex items-center gap-3 border border-purple-400/30">
+                    <i class="fas fa-code text-purple-400"></i>
+                    <div>
+                        <div class="font-medium">Full-Stack + AI</div>
+                        <div class="text-xs text-gray-400">Building the Future</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 flex flex-col items-center">
+            <div class="text-xs tracking-widest mb-2">SCROLL FOR JOURNEY</div>
+            <div class="w-6 h-10 border-2 border-cyan-400/50 rounded-full flex items-center justify-center">
+                <div class="w-1 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="max-w-7xl mx-auto px-8 py-24">
+        <div class="grid md:grid-cols-12 gap-16">
+            <div class="md:col-span-5">
+                <div class="sticky top-28">
+                    <div class="uppercase text-xs tracking-[3px] text-cyan-400 mb-3">CHAPTER 01</div>
+                    <h2 class="header-font text-6xl font-semibold leading-none neon-text">THE VISIONARY</h2>
+                    <div class="h-1 w-20 bg-gradient-to-r from-cyan-400 to-purple-600 my-8"></div>
+                    <p class="text-gray-400 leading-relaxed">
+                        Passionate technologist with deep expertise in building scalable applications 
+                        and AI-powered solutions. Continuously evolving with emerging technologies.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="md:col-span-7">
+                <div class="glass rounded-3xl p-10 terminal">
+                    <p class="mb-6 text-lg leading-relaxed">
+                        I am a results-driven Software Engineer based in Delhi with over 5 years of experience 
+                        in full-stack development, cloud infrastructure, and machine learning applications. 
+                        My approach combines clean architecture with futuristic user experiences.
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        Recently focused on optimizing backend systems and integrating generative AI capabilities 
+                        into production environments, significantly improving performance and user engagement.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="bg-black/40 py-24">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="uppercase text-xs tracking-[3px] text-cyan-400 mb-3">CHAPTER 02</div>
+            <h2 class="header-font text-6xl font-semibold mb-16 neon-text">EXPERIENCE LOG</h2>
+            
+            <div class="space-y-16">
+                <!-- Experience Item 1 -->
+                <div class="grid md:grid-cols-12 gap-8 items-start group">
+                    <div class="md:col-span-3 text-sm">
+                        <div class="font-mono text-cyan-400">2023 — PRESENT</div>
+                        <div class="text-white/70">Senior Software Engineer</div>
+                        <div class="text-purple-400">Company Name • Delhi</div>
+                    </div>
+                    <div class="md:col-span-9 glass rounded-3xl p-8 holo-card">
+                        <ul class="space-y-4 text-gray-300">
+                            <li class="flex gap-3">
+                                <span class="text-cyan-400 text-xl leading-none mt-1">›</span>
+                                Led development of microservices architecture that improved system throughput by 340%
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="text-cyan-400 text-xl leading-none mt-1">›</span>
+                                Integrated LLM-based features resulting in 45% reduction in support tickets
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="text-cyan-400 text-xl leading-none mt-1">›</span>
+                                Mentored 6 junior developers and established CI/CD best practices
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Experience Item 2 -->
+                <div class="grid md:grid-cols-12 gap-8 items-start group">
+                    <div class="md:col-span-3 text-sm">
+                        <div class="font-mono text-cyan-400">2022 — 2023</div>
+                        <div class="text-white/70">Software Engineer</div>
+                        <div class="text-purple-400">Previous Company • Remote / Delhi</div>
+                    </div>
+                    <div class="md:col-span-9 glass rounded-3xl p-8 holo-card">
+                        <ul class="space-y-4 text-gray-300">
+                            <li class="flex gap-3">
+                                <span class="text-cyan-400 text-xl leading-none mt-1">›</span>
+                                Built and scaled REST & GraphQL APIs serving 100K+ daily active users
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="text-cyan-400 text-xl leading-none mt-1">›</span>
+                                Implemented real-time features using WebSockets and Redis
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="text-cyan-400 text-xl leading-none mt-1">›</span>
+                                Reduced infrastructure costs by 38% through optimization
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="max-w-7xl mx-auto px-8 py-24">
+        <div class="uppercase text-xs tracking-[3px] text-cyan-400 mb-3">CHAPTER 03</div>
+        <h2 class="header-font text-6xl font-semibold mb-16 neon-text">NOTABLE DEPLOYMENTS</h2>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass rounded-3xl overflow-hidden group">
+                <div class="h-56 bg-gradient-to-br from-purple-600 to-cyan-600 flex items-center justify-center text-6xl font-black text-white/20">AI</div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-semibold mb-2">AI-Powered SaaS Platform</h3>
+                    <p class="text-gray-400 text-sm mb-6">Next-gen productivity tool using RAG and agentic workflows.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs px-3 py-1 bg-white/10 rounded-full">Next.js</span>
+                        <span class="text-xs px-3 py-1 bg-white/10 rounded-full">Python</span>
+                        <span class="text-xs px-3 py-1 bg-white/10 rounded-full">LangChain</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add more project cards similarly -->
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="bg-black/40 py-24">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="uppercase text-xs tracking-[3px] text-cyan-400 mb-3">CHAPTER 04</div>
+            <h2 class="header-font text-6xl font-semibold mb-16 neon-text">TECH STACK v2.0</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="glass p-8 rounded-3xl text-center holo-card">
+                    <div class="text-5xl mb-4">☁️</div>
+                    <div class="font-semibold">Cloud Native</div>
+                    <div class="text-xs text-gray-400 mt-1">AWS • GCP • Kubernetes</div>
+                </div>
+                <div class="glass p-8 rounded-3xl text-center holo-card">
+                    <div class="text-5xl mb-4">🧠</div>
+                    <div class="font-semibold">AI / ML</div>
+                    <div class="text-xs text-gray-400 mt-1">LangChain • TensorFlow • OpenAI</div>
+                </div>
+                <div class="glass p-8 rounded-3xl text-center holo-card">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <div class="font-semibold">Backend</div>
+                    <div class="text-xs text-gray-400 mt-1">Node.js • Python • Go</div>
+                </div>
+                <div class="glass p-8 rounded-3xl text-center holo-card">
+                    <div class="text-5xl mb-4">🎨</div>
+                    <div class="font-semibold">Frontend</div>
+                    <div class="text-xs text-gray-400 mt-1">React • Next.js • Tailwind</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Contact -->
+    <section class="max-w-7xl mx-auto px-8 py-24 grid md:grid-cols-2 gap-16">
+        <div>
+            <div class="uppercase text-xs tracking-[3px] text-cyan-400 mb-3">CHAPTER 05</div>
+            <h2 class="header-font text-5xl font-semibold mb-10">EDUCATION</h2>
+            <div class="space-y-8">
+                <div>
+                    <div class="font-medium">Bachelor of Technology — Computer Science</div>
+                    <div class="text-sm text-gray-400">University Name • 2018 - 2022</div>
+                    <div class="text-xs text-emerald-400 mt-1">CGPA: 8.7/10</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="contact">
+            <div class="uppercase text-xs tracking-[3px] text-cyan-400 mb-3">FINAL TRANSMISSION</div>
+            <h2 class="header-font text-5xl font-semibold mb-10">CONNECT IN THE METAVERSE</h2>
+            
+            <div class="space-y-6">
+                <a href="mailto:your.email@example.com" class="flex items-center gap-4 group">
+                    <i class="fas fa-envelope text-2xl w-10"></i>
+                    <div>
+                        <div class="font-medium group-hover:text-cyan-400">your.email@example.com</div>
+                        <div class="text-xs text-gray-500">Primary Contact</div>
+                    </div>
+                </a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank" class="flex items-center gap-4 group">
+                    <i class="fab fa-linkedin text-2xl w-10"></i>
+                    <div>
+                        <div class="font-medium group-hover:text-cyan-400">linkedin.com/in/yourprofile</div>
+                    </div>
+                </a>
+                <a href="https://github.com/yourgithub" target="_blank" class="flex items-center gap-4 group">
+                    <i class="fab fa-github text-2xl w-10"></i>
+                    <div>
+                        <div class="font-medium group-hover:text-cyan-400">github.com/yourgithub</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center text-xs text-gray-500 py-10 border-t border-white/10">
+        © 2026 Subham • Built with futuristic intent • Delhi, India
+    </footer>
+
+    <script>
+        // Tailwind script already included via CDN
+        
+        function downloadResume() {
+            alert("In a real implementation, this would trigger a PDF generation or direct download.\n\nFor now, save this HTML file and print to PDF for a beautiful result!");
+            // Advanced version could use jsPDF or html2canvas
+        }
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Keyboard shortcut: Press 'R' for random neon flicker effect
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'r') {
+                document.body.style.filter = 'hue-rotate(90deg) saturate(1.8)';
+                setTimeout(() => {
+                    document.body.style.filter = '';
+                }, 800);
+            }
+        });
+        
+        console.log('%c🚀 Futuristic Resume Loaded Successfully', 'color: #00f5ff; font-family: monospace; font-size: 14px;');
+    </script>
+</body>
+</html>
