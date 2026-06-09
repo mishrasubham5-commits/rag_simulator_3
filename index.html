@@ -343,7 +343,7 @@ footer{
       <div class="panel-title">Document Input & Chunking</div>
 
       <textarea id="documentInput">
-SunLife Payment API failed after deployment because authentication tokens expired unexpectedly. Engineering team identified middleware refresh issue. Root cause analysis confirmed token session expiration bug impacting 12 microservices. Jira incident PM-482 created. Production rollback completed successfully after hotfix deployment.
+Zomato Order API experienced failures after deployment due to a caching and race condition in order status updates. The engineering team identified inconsistent cache invalidation causing stale order states. Root cause analysis confirmed concurrent update handling issues impacting order fulfillment.
       </textarea>
 
       <div class="input-group">
@@ -375,7 +375,7 @@ SunLife Payment API failed after deployment because authentication tokens expire
       <div class="panel-title">Query & Retrieval</div>
 
       <textarea id="queryInput" style="height:110px">
-Why did payment API fail last month?
+Why did the Zomato Order API fail last month?
       </textarea>
 
       <button class="retrieve-btn" onclick="retrieveChunks()">
@@ -589,13 +589,13 @@ function retrieveChunks(){
 
       <span class="highlight">Match #1:</span><br><br>
 
-      "Payment API failed because authentication token refresh middleware expired unexpectedly."
+      "Zomato Order API incidents showing cache invalidation and stale order states impacting fulfillment."
 
       <br><br>
 
       <span class="highlight">Match #2:</span><br><br>
 
-      "Root cause analysis confirmed session expiration bug impacting production microservices."
+      "Root cause analysis confirmed concurrent update handling bug affecting order status propagation."
 
       <br><br>
 
@@ -613,16 +613,15 @@ function generateAnswer(){
 
     <div class="badge">Grounded Enterprise Response</div>
 
-    The payment API failed after deployment because authentication session tokens
-    expired unexpectedly inside middleware services.
+    The Zomato Order API experienced failures after deployment due to cache invalidation and race conditions during order status updates.
 
     Retrieved semantic chunks from the vector database confirmed that:
 
     <br><br>
 
-    • Token refresh logic failed after deployment  
-    • 12 microservices were impacted  
-    • Jira Incident PM-482 was triggered  
+    • Cache invalidation and concurrent update handling failed  
+    • Multiple services were impacted  
+    • Jira Incident ZOM-482 was triggered  
     • Engineering team executed rollback + hotfix deployment  
 
     <br><br>
